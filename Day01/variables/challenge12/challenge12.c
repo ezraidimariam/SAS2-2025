@@ -2,16 +2,15 @@
 
 int	main()
 {
-	int	num;
-	int	res = 0;
-	printf("entrez un nombre: ");
-	scanf("%d", &num);
+	int	n;
 
-	while (num > 0)
+	printf("entrez un nombre entier: ");
+	scanf("%d", &n);
+
+	while(n > 0)
 	{
-		int mod = num % 10;
-		int invers = res * 10 + mod;
-		printf("%d", invers);
-		num /= 10;
+		int num = n % 10;
+		printf("%d", num);
+		n /= 10;
 	}
-}  
+}
