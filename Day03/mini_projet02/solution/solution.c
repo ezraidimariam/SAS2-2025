@@ -30,10 +30,20 @@ int main() {
 
         switch(option) {
             case 1:
-                printf("Nom: "); scanf("%s", contacts[n].nom);
-                printf("Téléphone: "); scanf("%s", contacts[n].telephone);
-                printf("Email: "); scanf("%s", contacts[n].email);
-                n++;
+                printf("Nom: "); 
+                scanf("%s", contacts[n].nom);
+
+                printf("Telephone (exact 10 chiffres): "); 
+                scanf("%s", contacts[n].telephone);
+
+                if(strlen(contacts[n].telephone) == 10) {
+                    printf("Email: "); 
+                    scanf("%s", contacts[n].email);
+                    n++; 
+                    printf("Contact ajoute avec succes!\n");
+                } else {
+                    printf("Erreur: le numero doit contenir exactement 10 chiffres! Contact non ajoute.\n");
+                }
                 break;
 
             case 2:
@@ -42,31 +52,37 @@ int main() {
                 break;
 
             case 3:
-                printf("Nom à rechercher: "); scanf("%s", search);
+                printf("Nom a rechercher: "); scanf("%s", search);
                 for(i=0;i<n;i++)
                     if(strcmp(contacts[i].nom, search) == 0)
-                        printf("Trouvé: %s | %s | %s\n", contacts[i].nom, contacts[i].telephone, contacts[i].email);
+                        printf("Trouve: %s | %s | %s\n", contacts[i].nom, contacts[i].telephone, contacts[i].email);
                 break;
 
             case 4:
-                printf("Nom à modifier: "); scanf("%s", search);
+                printf("Nom a modifier: "); scanf("%s", search);
                 for(i=0;i<n;i++)
                     if(strcmp(contacts[i].nom, search) == 0) {
-                        printf("Nouveau téléphone: "); scanf("%s", contacts[i].telephone);
-                        printf("Nouvel email: "); scanf("%s", contacts[i].email);
-                        printf("Contact modifié!\n");
+                        printf("Nouveau telephone (exact 10 chiffres): "); 
+                        scanf("%s", contacts[i].telephone);
+
+                        if(strlen(contacts[i].telephone) == 10) {
+                            printf("Nouvel email: "); scanf("%s", contacts[i].email);
+                            printf("Contact modifie!\n");
+                        } else {
+                            printf("Erreur: le numero doit contenir exactement 10 chiffres! Modification annulee.\n");
+                        }
                     }
                 break;
 
             case 5:
-                printf("Nom à supprimer: "); scanf("%s", search);
+                printf("Nom a supprimer: "); scanf("%s", search);
                 for(i=0;i<n;i++)
                     if(strcmp(contacts[i].nom, search) == 0) {
                         int j;
                         for(j=i;j<n-1;j++)
                             contacts[j] = contacts[j+1];
                         n--;
-                        printf("Contact supprimé!\n");
+                        printf("Contact supprime!\n");
                         break;
                     }
                 break;
@@ -78,4 +94,3 @@ int main() {
 
     return 0;
 }
-
