@@ -56,28 +56,28 @@ int main() {
         scanf("%d", &choix);
 
         switch(choix) {
-            case 1: { //// Ajouter un animal
+            case 1: { // Ajouter un animal
                 int nbr;
                 printf("Combien d'animaux voulez-vous ajouter ?\n");
                 scanf("%d", &nbr);
 
+                if(count + nbr > MAX) {
+                    printf("Impossible d'ajouter %d animaux, le zoo ne peut contenir que %d de plus.\n", nbr, MAX - count);
+                    break;
+                }
+
                 int nextId = count + 1;
                 for(int i = 0; i < nbr; i++) {
-                    if(count >= MAX) {
-                        printf("Le zoo est plein !\n");
-                        break;
-                    }
-
                     animaux[count].id_unique = nextId++;
 
                     printf("Nom: ");
-                    scanf(" %s", animaux[count].nom);
+                    scanf(" %[^\n]s", animaux[count].nom);
                     printf("Espece: ");
-                    scanf(" %s", animaux[count].espece);
+                    scanf(" %[^\n]s", animaux[count].espece);
                     printf("Age: ");
                     scanf("%d", &animaux[count].age);
                     printf("Habitat: ");
-                    scanf(" %s", animaux[count].habitat);
+                    scanf(" %[^\n]s", animaux[count].habitat);
                     printf("Poids: ");
                     scanf("%f", &animaux[count].poids);
 
@@ -87,7 +87,7 @@ int main() {
                 break;
             }
 
-            case 2: { //// Afficher les animaux
+            case 2: { // Afficher les animaux
                 int option;
                 printf("\n=== AFFICHAGE DES ANIMAUX ===\n");
                 printf("1. Afficher tous les animaux\n");
@@ -98,14 +98,14 @@ int main() {
                 printf("Entrez une option: ");
                 scanf("%d", &option);
 
-                if(option == 1) { //// Tous
+                if(option == 1) { // Tous
                     for(int i = 0; i < count; i++) {
                         printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s | Poids:%.2f\n",
                             animaux[i].id_unique, animaux[i].nom, animaux[i].espece,
                             animaux[i].age, animaux[i].habitat, animaux[i].poids);
                     }
                 }
-                else if(option == 2) { //// Tri par nom
+                else if(option == 2) { // Tri par nom
                     for(int i = 0; i < count-1; i++) {
                         for(int j = i+1; j < count; j++) {
                             if(strcmp(animaux[i].nom, animaux[j].nom) > 0) {
@@ -122,7 +122,7 @@ int main() {
                             animaux[i].age, animaux[i].habitat, animaux[i].poids);
                     }
                 }
-                else if(option == 3) { //// Tri par age
+                else if(option == 3) { // Tri par age
                     for(int i = 0; i < count-1; i++) {
                         for(int j = i+1; j < count; j++) {
                             if(animaux[i].age > animaux[j].age) {
@@ -139,10 +139,10 @@ int main() {
                             animaux[i].age, animaux[i].habitat, animaux[i].poids);
                     }
                 }
-                else if(option == 4) { //// Affichage par habitat
+                else if(option == 4) { // Affichage par habitat
                     char hab[50];
                     printf("Donner l'habitat a afficher: ");
-                    scanf(" %s", hab);
+                    scanf(" %[^\n]s", hab);
 
                     int found = 0;
                     printf("\n--- Animaux dans l'habitat %s ---\n", hab);
@@ -164,7 +164,7 @@ int main() {
                 break;
             }
 
-            case 3: { //// Modifier un animal
+            case 3: { // Modifier un animal (juste age et habitat)
                 int id;
                 printf("Entrer l'ID de l'animal a modifier: ");
                 scanf("%d", &id);
@@ -173,16 +173,10 @@ int main() {
                 for(int i = 0; i < count; i++) {
                     if(animaux[i].id_unique == id) {
                         found = 1;
-                        printf("Nouveau nom: ");
-                        scanf(" %s", animaux[i].nom);
-                        printf("Nouvelle espece: ");
-                        scanf(" %s", animaux[i].espece);
                         printf("Nouvel age: ");
                         scanf("%d", &animaux[i].age);
                         printf("Nouvel habitat: ");
-                        scanf(" %s", animaux[i].habitat);
-                        printf("Nouveau poids: ");
-                        scanf("%f", &animaux[i].poids);
+                        scanf(" %[^\n]s", animaux[i].habitat);
                         printf("====== Animal modifie ! =======\n");
                         break;
                     }
@@ -193,7 +187,7 @@ int main() {
                 break;
             }
 
-            case 4: { //// Supprimer un animal par ID
+            case 4: { // Supprimer un animal par ID
                 int id;
                 printf("Entrer l'ID de l'animal a supprimer: ");
                 scanf("%d", &id);
@@ -216,7 +210,7 @@ int main() {
                 break;
             }
 
-            case 5: { //// Rechercher un animal
+            case 5: { // Rechercher un animal
                 int option;
                 printf("\n=== RECHERCHE ===\n");
                 printf("1. Par ID\n");
@@ -242,7 +236,7 @@ int main() {
                 else if(option == 2) {
                     char nom[50];
                     printf("Entrer le nom: ");
-                    scanf(" %s", nom);
+                    scanf(" %[^\n]s", nom);
                     for(int i = 0; i < count; i++) {
                         if(strcmp(animaux[i].nom, nom) == 0) {
                             found = 1;
@@ -255,7 +249,7 @@ int main() {
                 else if(option == 3) {
                     char espece[50];
                     printf("Entrer l'espece: ");
-                    scanf(" %s", espece);
+                    scanf(" %[^\n]s", espece);
                     for(int i = 0; i < count; i++) {
                         if(strcmp(animaux[i].espece, espece) == 0) {
                             found = 1;
@@ -274,7 +268,7 @@ int main() {
                 break;
             }
 
-            case 6: { //// Statistiques
+            case 6: { // Statistiques
                 printf("\n--- Statistiques du Zoo ---\n");
 
                 if(count == 0) {
@@ -291,19 +285,11 @@ int main() {
                     sommeAges += animaux[i].age;
                     sommePoids += animaux[i].poids;
 
-                    if(animaux[i].poids < animaux[minPoidsIndex].poids) {
-                        minPoidsIndex = i;
-                    }
-                    if(animaux[i].poids > animaux[maxPoidsIndex].poids) {
-                        maxPoidsIndex = i;
-                    }
+                    if(animaux[i].poids < animaux[minPoidsIndex].poids) minPoidsIndex = i;
+                    if(animaux[i].poids > animaux[maxPoidsIndex].poids) maxPoidsIndex = i;
 
-                    if(animaux[i].age < animaux[minAgeIndex].age) {
-                        minAgeIndex = i;
-                    }
-                    if(animaux[i].age > animaux[maxAgeIndex].age) {
-                        maxAgeIndex = i;
-                    }
+                    if(animaux[i].age < animaux[minAgeIndex].age) minAgeIndex = i;
+                    if(animaux[i].age > animaux[maxAgeIndex].age) maxAgeIndex = i;
                 }
 
                 float moyenneAge = (float)sommeAges / count;
@@ -339,9 +325,7 @@ int main() {
                 for(int i = 0; i < count; i++) {
                     int freq = 0;
                     for(int j = 0; j < count; j++) {
-                        if(strcmp(animaux[i].espece, animaux[j].espece) == 0) {
-                            freq++;
-                        }
+                        if(strcmp(animaux[i].espece, animaux[j].espece) == 0) freq++;
                     }
                     if(freq > maxCount) {
                         maxCount = freq;
@@ -363,3 +347,4 @@ int main() {
         }
     }
 }
+
