@@ -267,59 +267,40 @@ int main() {
                 }
                 break;
             }
-
             case 6: { // Statistiques
-                printf("\n--- Statistiques du Zoo ---\n");
+		    printf("\n--- Statistiques du Zoo ---\n");
 
-                if(count == 0) {
-                    printf("Aucun animal dans le zoo !\n");
-                    break;
-                }
+    		if(count == 0) {
+        	printf("Aucun animal dans le zoo !\n");
+       		break;
+    				}
 
-                int sommeAges = 0;
-                float sommePoids = 0;
-                int minPoidsIndex = 0, maxPoidsIndex = 0;
-                int minAgeIndex = 0, maxAgeIndex = 0;
+    		int sommeAges = 0;	
+    		int minAgeIndex = 0, maxAgeIndex = 0;
 
-                for(int i = 0; i < count; i++) {
-                    sommeAges += animaux[i].age;
-                    sommePoids += animaux[i].poids;
+    		for(int i = 0; i < count; i++) {
+        	sommeAges += animaux[i].age;
 
-                    if(animaux[i].poids < animaux[minPoidsIndex].poids) minPoidsIndex = i;
-                    if(animaux[i].poids > animaux[maxPoidsIndex].poids) maxPoidsIndex = i;
+        	if(animaux[i].age < animaux[minAgeIndex].age) minAgeIndex = i;
+        	if(animaux[i].age > animaux[maxAgeIndex].age) maxAgeIndex = i;
+    	}
 
-                    if(animaux[i].age < animaux[minAgeIndex].age) minAgeIndex = i;
-                    if(animaux[i].age > animaux[maxAgeIndex].age) maxAgeIndex = i;
-                }
+    	float moyenneAge = (float)sommeAges / count;
 
-                float moyenneAge = (float)sommeAges / count;
-                float moyennePoids = sommePoids / count;
+   	 printf("Nombre total d'animaux : %d\n", count);
+    	printf("Age moyen : %.2f ans\n", moyenneAge);
 
-                printf("Nombre total d'animaux : %d\n", count);
-                printf("Age moyen : %.2f ans\n", moyenneAge);
-                printf("Poids moyen : %.2f kg\n", moyennePoids);
+   	 printf("\n--- Animal le plus jeune ---\n");
+    	printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s\n",
+        animaux[minAgeIndex].id_unique, animaux[minAgeIndex].nom, animaux[minAgeIndex].espece,
+        animaux[minAgeIndex].age, animaux[minAgeIndex].habitat);
 
-                printf("\n--- Animal le plus leger ---\n");
-                printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s | Poids:%.2f\n",
-                    animaux[minPoidsIndex].id_unique, animaux[minPoidsIndex].nom, animaux[minPoidsIndex].espece,
-                    animaux[minPoidsIndex].age, animaux[minPoidsIndex].habitat, animaux[minPoidsIndex].poids);
+    	printf("\n--- Animal le plus vieux ---\n");
+    	printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s\n",
+        animaux[maxAgeIndex].id_unique, animaux[maxAgeIndex].nom, animaux[maxAgeIndex].espece,
+        animaux[maxAgeIndex].age, animaux[maxAgeIndex].habitat);
 
-                printf("\n--- Animal le plus lourd ---\n");
-                printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s | Poids:%.2f\n",
-                    animaux[maxPoidsIndex].id_unique, animaux[maxPoidsIndex].nom, animaux[maxPoidsIndex].espece,
-                    animaux[maxPoidsIndex].age, animaux[maxPoidsIndex].habitat, animaux[maxPoidsIndex].poids);
-
-                printf("\n--- Animal le plus jeune ---\n");
-                printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s | Poids:%.2f\n",
-                    animaux[minAgeIndex].id_unique, animaux[minAgeIndex].nom, animaux[minAgeIndex].espece,
-                    animaux[minAgeIndex].age, animaux[minAgeIndex].habitat, animaux[minAgeIndex].poids);
-
-                printf("\n--- Animal le plus vieux ---\n");
-                printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s | Poids:%.2f\n",
-                    animaux[maxAgeIndex].id_unique, animaux[maxAgeIndex].nom, animaux[maxAgeIndex].espece,
-                    animaux[maxAgeIndex].age, animaux[maxAgeIndex].habitat, animaux[maxAgeIndex].poids);
-
-                // --- Espece la plus représentée ---
+                    // --- Espece la plus représentée ---
                 int maxCount = 0;
                 char especeMax[50];
                 for(int i = 0; i < count; i++) {
@@ -347,4 +328,4 @@ int main() {
         }
     }
 }
-
+/////
