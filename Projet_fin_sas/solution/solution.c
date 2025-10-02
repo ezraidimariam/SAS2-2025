@@ -71,13 +71,13 @@ int main() {
                     animaux[count].id_unique = nextId++;
 
                     printf("Nom: ");
-                    scanf("%s", animaux[count].nom);
+                    scanf(" %s", animaux[count].nom);
                     printf("Espece: ");
-                    scanf("%s", animaux[count].espece);
+                    scanf(" %s", animaux[count].espece);
                     printf("Age: ");
                     scanf("%d", &animaux[count].age);
                     printf("Habitat: ");
-                    scanf("%s", animaux[count].habitat);
+                    scanf(" %s", animaux[count].habitat);
                     printf("Poids: ");
                     scanf("%f", &animaux[count].poids);
 
@@ -142,15 +142,20 @@ int main() {
                 else if(option == 4) { //// Affichage par habitat
                     char hab[50];
                     printf("Donner l'habitat a afficher: ");
-                    scanf("%s", hab);
+                    scanf(" %s", hab);
 
+                    int found = 0;
                     printf("\n--- Animaux dans l'habitat %s ---\n", hab);
                     for(int i = 0; i < count; i++) {
                         if(strcmp(animaux[i].habitat, hab) == 0) {
+                            found = 1;
                             printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s | Poids:%.2f\n",
                                 animaux[i].id_unique, animaux[i].nom, animaux[i].espece,
                                 animaux[i].age, animaux[i].habitat, animaux[i].poids);
                         }
+                    }
+                    if(!found) {
+                        printf("Aucun animal trouve dans cet habitat !\n");
                     }
                 }
                 else {
@@ -169,13 +174,13 @@ int main() {
                     if(animaux[i].id_unique == id) {
                         found = 1;
                         printf("Nouveau nom: ");
-                        scanf("%s", animaux[i].nom);
+                        scanf(" %s", animaux[i].nom);
                         printf("Nouvelle espece: ");
-                        scanf("%s", animaux[i].espece);
+                        scanf(" %s", animaux[i].espece);
                         printf("Nouvel age: ");
                         scanf("%d", &animaux[i].age);
                         printf("Nouvel habitat: ");
-                        scanf("%s", animaux[i].habitat);
+                        scanf(" %s", animaux[i].habitat);
                         printf("Nouveau poids: ");
                         scanf("%f", &animaux[i].poids);
                         printf("====== Animal modifie ! =======\n");
@@ -220,12 +225,14 @@ int main() {
                 printf("Votre choix: ");
                 scanf("%d", &option);
 
+                int found = 0;
                 if(option == 1) {
                     int id;
                     printf("Entrer l'ID: ");
                     scanf("%d", &id);
                     for(int i = 0; i < count; i++) {
                         if(animaux[i].id_unique == id) {
+                            found = 1;
                             printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s | Poids:%.2f\n",
                                 animaux[i].id_unique, animaux[i].nom, animaux[i].espece,
                                 animaux[i].age, animaux[i].habitat, animaux[i].poids);
@@ -235,9 +242,10 @@ int main() {
                 else if(option == 2) {
                     char nom[50];
                     printf("Entrer le nom: ");
-                    scanf("%s", nom);
+                    scanf(" %s", nom);
                     for(int i = 0; i < count; i++) {
                         if(strcmp(animaux[i].nom, nom) == 0) {
+                            found = 1;
                             printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s | Poids:%.2f\n",
                                 animaux[i].id_unique, animaux[i].nom, animaux[i].espece,
                                 animaux[i].age, animaux[i].habitat, animaux[i].poids);
@@ -247,9 +255,10 @@ int main() {
                 else if(option == 3) {
                     char espece[50];
                     printf("Entrer l'espece: ");
-                    scanf("%s", espece);
+                    scanf(" %s", espece);
                     for(int i = 0; i < count; i++) {
                         if(strcmp(animaux[i].espece, espece) == 0) {
+                            found = 1;
                             printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s | Poids:%.2f\n",
                                 animaux[i].id_unique, animaux[i].nom, animaux[i].espece,
                                 animaux[i].age, animaux[i].habitat, animaux[i].poids);
@@ -258,6 +267,9 @@ int main() {
                 }
                 else {
                     printf("Choix invalide !\n");
+                }
+                if(!found) {
+                    printf("Aucun animal trouve !\n");
                 }
                 break;
             }
@@ -272,17 +284,25 @@ int main() {
 
                 int sommeAges = 0;
                 float sommePoids = 0;
-                int minIndex = 0, maxIndex = 0;
+                int minPoidsIndex = 0, maxPoidsIndex = 0;
+                int minAgeIndex = 0, maxAgeIndex = 0;
 
                 for(int i = 0; i < count; i++) {
                     sommeAges += animaux[i].age;
                     sommePoids += animaux[i].poids;
 
-                    if(animaux[i].poids < animaux[minIndex].poids) {
-                        minIndex = i;
+                    if(animaux[i].poids < animaux[minPoidsIndex].poids) {
+                        minPoidsIndex = i;
                     }
-                    if(animaux[i].poids > animaux[maxIndex].poids) {
-                        maxIndex = i;
+                    if(animaux[i].poids > animaux[maxPoidsIndex].poids) {
+                        maxPoidsIndex = i;
+                    }
+
+                    if(animaux[i].age < animaux[minAgeIndex].age) {
+                        minAgeIndex = i;
+                    }
+                    if(animaux[i].age > animaux[maxAgeIndex].age) {
+                        maxAgeIndex = i;
                     }
                 }
 
@@ -295,21 +315,51 @@ int main() {
 
                 printf("\n--- Animal le plus leger ---\n");
                 printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s | Poids:%.2f\n",
-                    animaux[minIndex].id_unique, animaux[minIndex].nom, animaux[minIndex].espece,
-                    animaux[minIndex].age, animaux[minIndex].habitat, animaux[minIndex].poids);
+                    animaux[minPoidsIndex].id_unique, animaux[minPoidsIndex].nom, animaux[minPoidsIndex].espece,
+                    animaux[minPoidsIndex].age, animaux[minPoidsIndex].habitat, animaux[minPoidsIndex].poids);
 
                 printf("\n--- Animal le plus lourd ---\n");
                 printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s | Poids:%.2f\n",
-                    animaux[maxIndex].id_unique, animaux[maxIndex].nom, animaux[maxIndex].espece,
-                    animaux[maxIndex].age, animaux[maxIndex].habitat, animaux[maxIndex].poids);
+                    animaux[maxPoidsIndex].id_unique, animaux[maxPoidsIndex].nom, animaux[maxPoidsIndex].espece,
+                    animaux[maxPoidsIndex].age, animaux[maxPoidsIndex].habitat, animaux[maxPoidsIndex].poids);
+
+                printf("\n--- Animal le plus jeune ---\n");
+                printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s | Poids:%.2f\n",
+                    animaux[minAgeIndex].id_unique, animaux[minAgeIndex].nom, animaux[minAgeIndex].espece,
+                    animaux[minAgeIndex].age, animaux[minAgeIndex].habitat, animaux[minAgeIndex].poids);
+
+                printf("\n--- Animal le plus vieux ---\n");
+                printf("ID:%d | Nom:%s | Espece:%s | Age:%d | Habitat:%s | Poids:%.2f\n",
+                    animaux[maxAgeIndex].id_unique, animaux[maxAgeIndex].nom, animaux[maxAgeIndex].espece,
+                    animaux[maxAgeIndex].age, animaux[maxAgeIndex].habitat, animaux[maxAgeIndex].poids);
+
+                // --- Espece la plus représentée ---
+                int maxCount = 0;
+                char especeMax[50];
+                for(int i = 0; i < count; i++) {
+                    int freq = 0;
+                    for(int j = 0; j < count; j++) {
+                        if(strcmp(animaux[i].espece, animaux[j].espece) == 0) {
+                            freq++;
+                        }
+                    }
+                    if(freq > maxCount) {
+                        maxCount = freq;
+                        strcpy(especeMax, animaux[i].espece);
+                    }
+                }
+
+                printf("\nEspece la plus representee : %s (%d animaux)\n", especeMax, maxCount);
+
                 break;
             }
 
             case 0:
                 printf("Au revoir !\n");
-		return 0;
+                return 0;
 
             default:
                 printf("Choix invalide !\n");
         }
-    }}
+    }
+}
